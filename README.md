@@ -1,5 +1,7 @@
 <!-- prettier-ignore -->
 <div align="center">
+    
+# Sklerokardia: Simulador interactivo de dinámica de opiniones basado en el **Modelo del Compás Social**.
 
 <img src="./banner.jpg" alt="Sklerokardia banner" width="100%" />
 
@@ -8,9 +10,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 [![Citation](https://img.shields.io/badge/Cite-this_repository-2ea44f?style=flat-square&logo=github&logoColor=white)](#citing-this-project)
 
-# Sklerokardia
-
-Simulador interactivo de dinámica de opiniones basado en el **Modelo del Compás Social**.
 
 [Overview](#overview) · [Quick start](#quick-start) · [Model](#model-parameters) · [Testing](#testing) · [Citing](#citing-this-project)
 
