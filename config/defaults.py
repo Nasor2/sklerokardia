@@ -1,4 +1,4 @@
-"""Configuración por defecto del simulador Skleokardia."""
+"""Configuración por defecto del simulador Sklerokardia."""
 
 DEFAULTS = {
     "alpha": 1.0,

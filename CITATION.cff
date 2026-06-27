@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Sklerokardia"
+abstract: "Interactive opinion dynamics simulator based on the Social Compass Model (Sampson & Restrepo, 2026)."
+authors:
+  - name: "Nasor2"
+repository-code: "https://github.com/Nasor2/sklerokardia"
+license: MIT
+date-released: "2026-06-27"
+keywords:
+  - opinion-dynamics
+  - social-compass-model
+  - polarization
+  - depolarization
+  - kuramoto
+  - streamlit
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Sampson"
+      given-names: "Corbit R."
+    - family-names: "Restrepo"
+      given-names: "Juan G."
+  title: "Low-dimensional Dynamics of the Social Compass Model"
+  journal: "arXiv preprint"
+  year: 2026
+  doi: "10.48550/arXiv.2606.26378"
+  url: "https://arxiv.org/abs/2606.26378"

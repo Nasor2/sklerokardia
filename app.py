@@ -12,13 +12,13 @@ from visualization.temporal_plot import create_temporal_plot
 from visualization.equations_panel import show_equations_panel
 
 st.set_page_config(
-    page_title="Skleokardia",
+    page_title="Sklerokardia",
     page_icon="🧭",
     layout="wide",
 )
 
 # ── Header ──────────────────────────────────────────────────────────
-st.title("🧭 Skleokardia")
+st.title("🧭 Sklerokardia")
 st.caption("Simulador de Dinámica de Opiniones — Modelo del Compás Social · Sampson & Restrepo (2026)")
 
 # ── Session state ───────────────────────────────────────────────────

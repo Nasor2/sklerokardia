@@ -1,139 +1,152 @@
-# Skleokardia — Simulador de Dinámica de Opiniones
+<!-- prettier-ignore -->
+<div align="center">
 
-Simulador interactivo basado en el **Modelo del Compás Social** para explorar la dinámica de opiniones, la polarización y la despolarización en poblaciones con opiniones interdependientes.
+<img src="./banner.jpg" alt="Sklerokardia banner" width="100%" />
 
-Desarrollado con [Streamlit](https://streamlit.io/) y [Plotly](https://plotly.com/python/).
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.35+-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
+[![Citation](https://img.shields.io/badge/Cite-this_repository-2ea44f?style=flat-square&logo=github&logoColor=white)](#citing-this-project)
 
----
+# Sklerokardia
 
-## Base Teórica
+Simulador interactivo de dinámica de opiniones basado en el **Modelo del Compás Social**.
 
-Este implementa el modelo propuesto por Sampson & Restrepo (2026), que extiende el Modelo del Compás Social original de Ojer, Starnini & Pastor-Satorras (2023).
+[Overview](#overview) · [Quick start](#quick-start) · [Model](#model-parameters) · [Testing](#testing) · [Citing](#citing-this-project)
 
-### Ecuaciones Principales
+</div>
 
-**Dinámica de un agente (Ecuación 1):**
+## Overview
 
-$$\frac{d\theta_n}{dt} = -\rho_n \sin(\theta_n - \phi_n) + \frac{K}{N} \sum_j \sin(\theta_j - \theta_n)$$
+Sklerokardia es un simulador que modela la evolución de opiniones en poblaciones con opiniones interdependientes, implementando el modelo propuesto por [Sampson & Restrepo (2026)](https://arxiv.org/abs/2606.26378). Permite explorar cómo parámetros sociales (influencia, convicción, estructura comunitaria) determinan la transición entre polarización y consenso.
 
-**Parámetro de orden (Ecuación 2):**
+> [!NOTE]
+> El modelo extiende el Modelo del Compás Social original de [Ojer, Starnini & Pastor-Satorras (PRL, 2023)](https://doi.org/10.1103/PhysRevLett.130.207401), utilizando el Ansatz de Ott-Antonsen para derivar ecuaciones de baja dimensión que describen la dinámica macroscópica.
 
-$$z = \frac{1}{N} \sum_n e^{i\theta_n}, \quad r = |z|$$
+### Features
 
-**Acoplamiento crítico (Ecuación 27):**
+- Tres modos de simulación: Euler vectorizado (rápido), agent-based (detallado), comunidades (con µ)
+- Panel interactivo con sliders para todos los parámetros del modelo
+- Escenarios predefinidos (polarización urbano-rural, campaña electoral, diálogo de paz)
+- Gráficos polar y temporales con Plotly
+- Ecuaciones renderizadas en LaTeX directamente en la interfaz
+- Detección automática de convergencia
 
-$$K_c = \frac{2}{\mathbb{E}[\rho^{-1}]}$$
-
----
-
-## Instalación
+## Quick start
 
 ```bash
-# Clonar el repositorio
-git clone https://github.com/Nasor2/skleokardia.git
-cd skleokardia
+# Clone the repository
+git clone https://github.com/Nasor2/sklerokardia.git
+cd sklerokardia
 
-# Crear y activar entorno virtual
+# Create and activate virtual environment
 python -m venv venv
 source venv/bin/activate  # Linux/macOS
 # venv\Scripts\activate   # Windows
 
-# Instalar dependencias
+# Install dependencies
 pip install -r requirements.txt
-```
 
-## Ejecución
-
-```bash
+# Run the app
 streamlit run app.py
 ```
 
-La aplicación se abrirá en `http://localhost:8501`.
+> [!TIP]
+> La aplicación se abrirá en `http://localhost:8501`. Configura los parámetros en el sidebar y presiona **Ejecutar** para iniciar una simulación.
 
----
+## Model Parameters
 
-## Parámetros del Modelo
+| Parameter | Symbol | Range | Description |
+|-----------|--------|-------|-------------|
+| Ideological anchor | α (ρ base) | 0.1 – 10.0 | Average belief firmness. Higher = more resistance to change. |
+| Social influence | K | 0.0 – 5.0 | Interaction strength. K > Kc triggers consensus. |
+| Community separation | µ | 0.0 – 1.0 | 0 = isolated communities, 1 = no community structure. |
+| Angular separation | φ₀ | 0 – π/2 | Separates initial opinion clusters. |
+| Stubborn agents | — | 0 – 30% | Percentage of agents with extremely high ρ (never change). |
 
-| Parámetro | Símbolo | Rango | Descripción |
-|-----------|---------|-------|-------------|
-| Amarre ideológico | α (ρ base) | 0.1 – 10.0 | Firmeza promedio de creencias. Mayor valor = más resistencia al cambio. |
-| Influencia social | K | 0.0 – 5.0 | Fuerza de interacción entre agentes. K > Kc → consenso emerge. |
-| Separación comunitaria | µ | 0.0 – 1.0 | 0 = comunidades aisladas, 1 = sin estructura comunitaria. |
-| Separación angular | φ₀ | 0 – π/2 | Separa los clusters de opiniones iniciales. |
-| Agentes inamovibles | — | 0 – 30% | Porcentaje de agentes con ρ extremadamente alta (tercos). |
+The critical coupling K_c = 2 / E[ρ⁻¹] determines the phase transition. When K > K_c, the polarized state becomes unstable and consensus emerges.
 
----
+## Simulation Modes
 
-## Modos de Simulación
+| Mode | When | Description |
+|------|------|-------------|
+| **Euler Vectorizado** | µ = 1, user selects | Vectorized NumPy operations. Fast for large N. |
+| **Agent-Based** | User selects | Step-by-step Euler integration. More detailed, slower. |
+| **Communities** | µ < 1 (auto) | Two communities with intra/inter coupling. Overrides user selection. |
 
-| Modo | Descripción |
-|------|-------------|
-| **Euler Vectorizado** | Operaciones vectorizadas con NumPy. Rápido para N grande. |
-| **Agent-Based** | Cada agente se simula por separado. Más detallado, más lento. |
-| **Comunidades** | Dos comunidades con acoplamiento intra/inter (µ). Se activa automáticamente cuando µ < 1. |
+> [!IMPORTANT]
+> When µ < 1, the simulator automatically switches to agent-based mode for the community model (Eq. 43), regardless of the user's mode selection.
 
----
-
-## Estructura del Proyecto
+## Project Structure
 
 ```
-skleokardia/
-├── app.py                  # Punto de entrada Streamlit
-├── requirements.txt        # Dependencias
+sklerokardia/
+├── app.py                  # Streamlit entry point
+├── requirements.txt
 ├── config/
-│   ├── defaults.py         # Valores por defecto
-│   └── scenarios.py        # Escenarios predefinidos
+│   ├── defaults.py         # Default parameter values
+│   └── scenarios.py        # Preset simulation scenarios
 ├── core/
-│   ├── model.py            # Ecuaciones del modelo (1, 2, 7, 8, 25, 27, 28)
+│   ├── model.py            # Equations (1, 2, 7, 8, 25, 27, 28)
 │   ├── params.py           # SimulationParams / SimulationResult
-│   ├── engine.py           # Orquestador principal
-│   └── convergence.py      # Detección de convergencia
+│   ├── engine.py           # Main orchestrator
+│   └── convergence.py      # Convergence detection
 ├── simulation/
-│   ├── ode_reducer.py      # Euler vectorizado (NumPy)
-│   ├── agent_based.py      # Euler paso a paso
-│   └── communities.py      # Modelo de dos comunidades (µ)
+│   ├── ode_reducer.py      # Vectorized Euler (NumPy)
+│   ├── agent_based.py      # Step-by-step Euler
+│   └── communities.py      # Two-community model (µ)
 ├── visualization/
-│   ├── polar_plot.py       # Gráfico polar (Plotly)
-│   ├── temporal_plot.py    # Evolución temporal r(t)
-│   ├── info_panel.py       # Panel de métricas
-│   └── equations_panel.py  # Ecuaciones en LaTeX
+│   ├── polar_plot.py       # Polar scatter (Plotly)
+│   ├── temporal_plot.py    # r(t) time series
+│   ├── info_panel.py       # Metrics panel
+│   └── equations_panel.py  # LaTeX equations display
 ├── utils/
-│   ├── validators.py       # Validación de entrada
-│   └── formatters.py       # Formateo de display
+│   ├── validators.py       # Input validation
+│   └── formatters.py       # Display formatting
 └── tests/
-    ├── test_model.py       # Tests de ecuaciones
-    ├── test_params.py      # Tests de parámetros
-    ├── test_engine.py      # Tests del motor
-    ├── test_convergence.py # Tests de convergencia
-    └── test_integration.py # Tests de comportamiento físico
+    ├── test_model.py       # Equation tests
+    ├── test_params.py      # Parameter tests
+    ├── test_engine.py      # Engine tests
+    ├── test_convergence.py # Convergence tests
+    └── test_integration.py # Physical behavior tests
 ```
-
----
 
 ## Testing
 
 ```bash
-# Ejecutar todos los tests
+# Run all tests
 python -m pytest tests/ -v
 
-# Ejecutar un test específico
+# Run a specific test
 python -m pytest tests/test_engine.py::TestRunSimulation::test_ode_mode -v
 ```
 
----
+> [!NOTE]
+> Tests verify physical behavior: high K converges to consensus, low K stays polarized, stubborn agents don't move, and ODE vs agent-based modes produce consistent results.
 
-## Referencias
+## Citing This Project
 
-1. **C. R. Sampson & J. G. Restrepo**, "Low-dimensional Dynamics of the Social Compass Model," arXiv:2606.26378 (2026).
+If you use Sklerokardia in your research, please cite the underlying paper:
 
-2. **J. Ojer, M. Starnini & R. Pastor-Satorras**, "Modeling Explosive Opinion Depolarization in Interdependent Topics," *Physical Review Letters* 130, 207401 (2023).
+```bibtex
+@article{sampson2026socialcompass,
+  author    = {Sampson, Corbit R. and Restrepo, Juan G.},
+  title     = {Low-dimensional Dynamics of the Social Compass Model},
+  journal   = {arXiv preprint arXiv:2606.26378},
+  year      = {2026},
+  url       = {https://arxiv.org/abs/2606.26378},
+  doi       = {10.48550/arXiv.2606.26378}
+}
+```
 
-3. **E. Ott & T. M. Antonsen**, "Low dimensional behavior of large systems of globally coupled oscillators," *Chaos* 18, 037113 (2008).
+You can also click the **Cite this repository** button on the GitHub sidebar for APA and BibTeX formats.
+
+## References
+
+1. **C. R. Sampson & J. G. Restrepo**, "Low-dimensional Dynamics of the Social Compass Model," [arXiv:2606.26378](https://arxiv.org/abs/2606.26378) (2026).
+
+2. **J. Ojer, M. Starnini & R. Pastor-Satorras**, "Modeling Explosive Opinion Depolarization in Interdependent Topics," [*Physical Review Letters* 130, 207401](https://doi.org/10.1103/PhysRevLett.130.207401) (2023).
+
+3. **E. Ott & T. M. Antonsen**, "Low dimensional behavior of large systems of globally coupled oscillators," [*Chaos* 18, 037113](https://doi.org/10.1063/1.2963115) (2008).
 
 4. **Y. Kuramoto**, "Self-entrainment of a population of coupled non-linear oscillators," *International Symposium on Mathematical Problems in Theoretical Physics*, Lecture Notes in Physics vol 39 (1975).
-
----
-
-## Licencia
-
-[MIT](LICENSE)
