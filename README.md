@@ -1,7 +1,7 @@
 <!-- prettier-ignore -->
 <div align="center">
     
-# Sklerokardia: Simulador interactivo de dinámica de opiniones basado en el **Modelo del Compás Social**.
+# Sklerokardia: Interactive Opinion Dynamics Simulator Based on the **Social Compass Model**
 
 <img src="./banner.jpg" alt="Sklerokardia banner" width="100%" />
 
@@ -18,19 +18,19 @@
 
 ## Overview
 
-Sklerokardia es un simulador que modela la evolución de opiniones en poblaciones con opiniones interdependientes, implementando el modelo propuesto por [Sampson & Restrepo (2026)](https://arxiv.org/abs/2606.26378). Permite explorar cómo parámetros sociales (influencia, convicción, estructura comunitaria) determinan la transición entre polarización y consenso.
+Sklerokardia is a simulator that models opinion evolution in populations with interdependent opinions, implementing the model proposed by [Sampson & Restrepo (2026)](https://arxiv.org/abs/2606.26378). It allows exploring how social parameters (influence, conviction, community structure) determine the transition between polarization and consensus.
 
 > [!NOTE]
-> El modelo extiende el Modelo del Compás Social original de [Ojer, Starnini & Pastor-Satorras (PRL, 2023)](https://doi.org/10.1103/PhysRevLett.130.207401), utilizando el Ansatz de Ott-Antonsen para derivar ecuaciones de baja dimensión que describen la dinámica macroscópica.
+> The model extends the original Social Compass Model by [Ojer, Starnini & Pastor-Satorras (PRL, 2023)](https://doi.org/10.1103/PhysRevLett.130.207401), using the Ott-Antonsen Ansatz to derive low-dimensional equations describing macroscopic dynamics.
 
 ### Features
 
-- Tres modos de simulación: Euler vectorizado (rápido), agent-based (detallado), comunidades (con µ)
-- Panel interactivo con sliders para todos los parámetros del modelo
-- Escenarios predefinidos (polarización urbano-rural, campaña electoral, diálogo de paz)
-- Gráficos polar y temporales con Plotly
-- Ecuaciones renderizadas en LaTeX directamente en la interfaz
-- Detección automática de convergencia
+- Three simulation modes: vectorized Euler (fast), agent-based (detailed), communities (with µ)
+- Interactive panel with sliders for all model parameters
+- Preset scenarios (urban-rural polarization, electoral campaign, peace dialogue)
+- Polar and temporal plots with Plotly
+- LaTeX-rendered equations directly in the interface
+- Automatic convergence detection
 
 ## Quick start
 
@@ -55,7 +55,7 @@ streamlit run app.py
 > **[Try the live demo](https://skleokardia.streamlit.app/)** — no installation required.
 
 > [!TIP]
-> La aplicación se abrirá en `http://localhost:8501`. Configura los parámetros en el sidebar y presiona **Ejecutar** para iniciar una simulación.
+> The app will open at `http://localhost:8501`. Configure parameters in the sidebar and press **Run** to start a simulation.
 
 ## Model Parameters
 
@@ -73,7 +73,7 @@ The critical coupling K_c = 2 / E[ρ⁻¹] determines the phase transition. When
 
 | Mode | When | Description |
 |------|------|-------------|
-| **Euler Vectorizado** | µ = 1, user selects | Vectorized NumPy operations. Fast for large N. |
+| **Vectorized Euler** | µ = 1, user selects | Vectorized NumPy operations. Fast for large N. |
 | **Agent-Based** | User selects | Step-by-step Euler integration. More detailed, slower. |
 | **Communities** | µ < 1 (auto) | Two communities with intra/inter coupling. Overrides user selection. |
 
