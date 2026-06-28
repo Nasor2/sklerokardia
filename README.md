@@ -9,6 +9,7 @@
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.35+-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 [![Citation](https://img.shields.io/badge/Cite-this_repository-2ea44f?style=flat-square&logo=github&logoColor=white)](#citing-this-project)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-skleokardia.streamlit.app-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://skleokardia.streamlit.app/)
 
 
 [Overview](#overview) · [Quick start](#quick-start) · [Model](#model-parameters) · [Testing](#testing) · [Citing](#citing-this-project)
@@ -49,6 +50,9 @@ pip install -r requirements.txt
 # Run the app
 streamlit run app.py
 ```
+
+> [!TIP]
+> **[Try the live demo](https://skleokardia.streamlit.app/)** — no installation required.
 
 > [!TIP]
 > La aplicación se abrirá en `http://localhost:8501`. Configura los parámetros en el sidebar y presiona **Ejecutar** para iniciar una simulación.
